@@ -1,0 +1,49 @@
+body {
+    background-color: rgba(3, 24, 17, 0.137) !important;
+}
+
+.msg {
+    display: flex;
+}
+
+.status {
+    padding-top: 1rem;
+}
+
+.dropDown {
+    width: 10rem !important;
+    padding: 1%;
+}
+
+
+
+.dropDownContainer {
+    display: flex !important;
+    padding: 1rem !important;
+    /* background-image: url('../js/data/cars.json'); */
+}
+
+.filter {
+    width: 16rem !important;
+    padding: 0%;
+}
+
+
+
+.filterContainer {
+    display: flex !important;
+    padding: 1rem !important;
+    /* background-image: url('../js/data/cars.json'); */
+}
+
+.filter-content{
+    display: flex;
+    padding: 1em;
+    margin: 1em;
+}
+
+.tableFilter{
+    /* margin: 0.1em; */
+    /* margin: 1em; */
+    padding: 1em;
+}
