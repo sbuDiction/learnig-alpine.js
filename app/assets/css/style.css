@@ -36,14 +36,18 @@ body {
     /* background-image: url('../js/data/cars.json'); */
 }
 
-.filter-content{
+.filter-content {
     display: flex;
     padding: 1em;
     margin: 1em;
 }
 
-.tableFilter{
+.tableFilter {
     /* margin: 0.1em; */
     /* margin: 1em; */
     padding: 1em;
+}
+
+.hidden {
+    display: none !important;
 }

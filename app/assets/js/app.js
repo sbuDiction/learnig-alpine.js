@@ -1,12 +1,18 @@
 document.addEventListener('alpine:init', () => {
     Alpine.data('cars', () => ({
         filteredList: [],
+        availabilityCounter: 0,
         filterMsg: "",
+        isLoading: false,
+        isShow: false,
         showMgs: false,
         townInputVal: 'All',
         modelInputVal: 'All',
         colorInputVal: 'All',
         makeInputVal: 'All',
+        pagination: Pagination(),
+        paging: 0,
+        currentPage: 0,
         towFilter: {
             Paarl: "CJ", Bellville: "CY", Stellenbosch: "CL", Malmesbury: "CK", "Cape Town": "CA", Kuilsriver: "CF"
         },
@@ -15,7 +21,16 @@ document.addEventListener('alpine:init', () => {
             fetch('./cars.json')
                 .then(response => response.json())
                 .then(cars => {
-                    this.filteredList = cars;
+                    this.isLoading = true;
+                    
+                    setTimeout(() => {
+                        this.isLoading = false;
+                        this.isShow = true;
+                        this.availabilityCounter = cars.length;
+                        this.paging = cars.length / 5;
+                        this.filteredList = this.pagination.paginate(cars, 5, 1);
+                    }, 1000);
+
                 });
         },
 
@@ -23,6 +38,8 @@ document.addEventListener('alpine:init', () => {
             fetch('./cars.json')
                 .then(response => response.json())
                 .then(cars => {
+                    this.isShow = false;
+                    this.isLoading = true;
                     const filterByAll = this.townInputVal !== 'All' && this.modelInputVal !== 'All' && this.colorInputVal !== 'All' && this.makeInputVal !== 'All';
                     const filteredList = cars.filter(car => {
                         if (filterByAll) return car.town === this.townInputVal && car.model === this.modelInputVal && car.color === this.colorInputVal && car.make === this.makeInputVal;
@@ -35,7 +52,15 @@ document.addEventListener('alpine:init', () => {
                         else return true;
                     });
 
-                    this.filteredList = filteredList;
+                    setTimeout(() => {
+                        this.isLoading = false;
+                        this.isShow = true;
+                        this.availabilityCounter = filteredList.length;
+                        this.filterMsg = 'The filtered results were not found';
+                        this.paging = Math.round(filteredList.length / 5);
+                        this.filteredList = this.pagination.paginate(filteredList, 5, 1);
+                    }, 100);
+
                 });
 
         },
@@ -67,5 +92,21 @@ document.addEventListener('alpine:init', () => {
                     });
             }
         },
+
+        handlePagination(e) {
+            e.preventDefault();
+            const pageNumber = e.target.value;
+            fetch('./cars.json')
+                .then(response => response.json())
+                .then(carsList => {
+                    this.isLoading = true;
+                    this.isShow = false;
+                    setTimeout(() => {
+                        this.isLoading = false;
+                        this.isShow = true;
+                        this.filteredList = this.pagination.paginate(carsList, 5, pageNumber);
+                    }, 100);
+                });
+        }
     }))
 })
