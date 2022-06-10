@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cars Widget</title>
-    <link rel="stylesheet" href="./app/assets/css/filterDropDown.css">
+    <!-- ====================================== css links ====================================================== -->
     <link rel="stylesheet" href="./app/assets/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="./app/assets/js/app.js"></script>
+    <!-- ==================================== js scripts ====================================================== -->
+    <script src="./app/app.js"></script>
     <script src="./app/components/dropdown.js"></script>
+    <script src="./app/components/searchCrumbs.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </head>
@@ -39,6 +39,7 @@
                     </template>
                 </select>
             </div>
+
             <div class="dropDown">
                 <select x-on:change="filter()" x-model="townInputVal"
                     class="form-select form-select-sm border border-info" aria-label=".form-select-sm example">
@@ -72,52 +73,91 @@
         <!-- ============================================================================================================================= -->
         <hr class="text-info">
         <!-- ============================================================================================================================= -->
+        <div class="d-flex justify-content-center">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+                aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <template x-for="crumb in crumbs">
+                        <li class="breadcrumb-item"><a href="#" x-text="crumb">Search</a></li>
+                        <li class="breadcrumb-item" aria-current="page">Library</li>
+                    </template>
+
+                </ol>
+            </nav>
+
+        </div>
         <div class="filter-content d-flex justify-content-center">
-            <div class="dropdown  border border-info" data-control="checkbox-dropdown">
-                <label class="dropdown-label">Select</label>
 
-                <div class="dropdown-list">
-                    <a href="#" data-toggle="check-all" class="dropdown-option">
-                        Check All
-                    </a>
-
-                    <label class="dropdown-option">
-                        <input type="checkbox" name="dropdown-group" value="Selection 1" />
-                        Most Popular
-                    </label>
-
-                    <label class="dropdown-option">
-                        <input type="checkbox" name="dropdown-group" value="Selection 2" />
-                        Nissan From Malmesbury
-                    </label>
-
-                    <label class="dropdown-option">
-                        <input type="checkbox" name="dropdown-group" value="Selection 3" />
-                        Most Blue Cars
-                    </label>
-
-                    <label class="dropdown-option">
-                        <input type="checkbox" name="dropdown-group" value="Selection 4" />
-                        Fewest Orange Cars
-                    </label>
-
-                    <label class="dropdown-option">
-                        <input type="checkbox" name="dropdown-group" value="Selection 5" />
-                        Most Popular Model
-                    </label>
-
-
-                    <label class="dropdown-option">
-                        <input type="checkbox" name="dropdown-group" value="Selection 5" />
-                        Most Popular Stellenbosch
-                    </label>
-
-
-                    <label class="dropdown-option">
-                        <input type="checkbox" name="dropdown-group" value="Selection 5" />
-                        least Popular Kuilsriver
-                    </label>
-                </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary-outlined dropdown-toggle border border-info" type="button"
+                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Advanced search filters
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Most Popular
+                                </label>
+                            </div>
+                        </a></li>
+                    <li><a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Nissan From Malmesbury
+                                </label>
+                            </div>
+                        </a></li>
+                    <li><a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Most Blue Cars
+                                </label>
+                            </div>
+                        </a></li>
+                    <li><a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Fewest Orange Cars
+                                </label>
+                            </div>
+                        </a></li>
+                    <li><a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Most Popular Model
+                                </label>
+                            </div>
+                        </a></li>
+                    <li><a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Most Popular Stellenbosch
+                                </label>
+                            </div>
+                        </a></li>
+                    <li><a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    least Popular Kuilsriver
+                                </label>
+                            </div>
+                        </a></li>
+                </ul>
             </div>
         </div>
         <!-- ============================================================================================================================= -->
@@ -177,6 +217,7 @@
                     </template>
                 </tbody>
             </table>
+
             <!-- ===================================================================================================================== -->
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
@@ -188,6 +229,7 @@
                 </ul>
             </nav>
         </div>
+
         <!-- ====================================================================================================================== -->
         <div x-show="filteredList.length === 0" class="alert alert-primary align-items-center msg" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
@@ -196,11 +238,17 @@
             <div x-text="filterMsg">No results found</div>
         </div>
         <!-- ============================================================================================================================= -->
+
     </div>
 
-    <script src="./app/components/checkboxDropdown.js"></script>
     <script src="./app/assets/js/functions/paging.js"></script>
     <script src="./app/assets/js/functions/filter.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

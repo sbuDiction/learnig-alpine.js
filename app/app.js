@@ -16,18 +16,20 @@ document.addEventListener('alpine:init', () => {
         towFilter: {
             Paarl: "CJ", Bellville: "CY", Stellenbosch: "CL", Malmesbury: "CK", "Cape Town": "CA", Kuilsriver: "CF"
         },
+        isActive: false,
+        crumbs: {},
 
         init() {
             fetch('./cars.json')
                 .then(response => response.json())
                 .then(cars => {
                     this.isLoading = true;
-                    
+                    this.filterMsg = 'Please wait while we fecth some data...';
                     setTimeout(() => {
                         this.isLoading = false;
                         this.isShow = true;
                         this.availabilityCounter = cars.length;
-                        this.paging = cars.length / 5;
+                        this.paging = Math.round(cars.length / 5);
                         this.filteredList = this.pagination.paginate(cars, 5, 1);
                     }, 1000);
 
@@ -107,6 +109,12 @@ document.addEventListener('alpine:init', () => {
                         this.filteredList = this.pagination.paginate(carsList, 5, pageNumber);
                     }, 100);
                 });
+        },
+
+
+        handleSearchCrumbs(crumb) {
+            if (this.crumbs['search'] === undefined)
+                this.crumbs['search'] = crumb;
         }
     }))
 })
